@@ -12,6 +12,8 @@
   `bigquery-public-data.world_bank_health_population.health_nutrition_population`
 - WHERE
   - year IS NOT NULL
+- LIMIT
+  - 10
 # 3. Select the entire table
 - SELECT
   - *
@@ -25,7 +27,7 @@
 # 5. List the country_name from the table
 - SELECT
   - Distinct (country_name)
--FROM
+- FROM
   `bigquery-public-data.world_bank_health_population.health_nutrition_population`
 # 6. Find average of values and limit to 10
 - SELECT
@@ -34,7 +36,9 @@
    `bigquery-public-data.world_bank_health_population.health_nutrition_population`
 - GROUP BY
   - country_name
-# 7. Find the countries with Highest Population and limit it to 10
+- LIMIT
+  - 10
+# 7. Find the countries with Highest Population, limit it to 10 and arrange it in descending order
 - SELECT
   - country_name,
   MAX(value) as Highest_Population
@@ -46,7 +50,7 @@
   - Highest_Population DESC
 - LIMIT
   - 10
-# 8. Find the country with lowest life expectancy and limit it to 10
+# 8. Find the country with lowest life expectancy, limit it to 10 and arrange in ascending order
 - SELECT
   - MIN(value) as Lowest_LifeExpectancy
 - FROM
@@ -69,3 +73,15 @@
   - country_code = additional_data.related_indicators
 - LIMIT
    - 10
+# 10. Find the health data and the additional data for country_code by left joining the country summary between the years 1970 and 2000
+- SELECT
+  - health_data.*,
+    additional_data.*
+- FROM
+  `bigquery-public-data.world_bank_health_population.health_nutrition_population` AS health_data
+- LEFT JOIN
+  `bigquery-public-data.world_bank_health_population.country_summary` AS additional_data
+- ON
+  - health_data.country_code = additional_data.country_code
+- WHERE 
+  - YEAR BETWEEN 1970 AND 2000
