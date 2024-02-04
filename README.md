@@ -1,4 +1,4 @@
---1. What is the minimum number of cases in this table where the value is not null?
+What is the minimum number of cases in this table where the value is not null?
 SELECT
   --MIN(value) AS minimum_cases
   --2. List the years where limit is 10
